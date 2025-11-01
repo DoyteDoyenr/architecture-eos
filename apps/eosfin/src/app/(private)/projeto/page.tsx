@@ -4,7 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { ClientOnly } from '@/components/client-only'
 import { trpc } from '@/lib/trpc'
+
+import { ProjectList } from './_components/project-list'
 
 const createProjectSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório'),
@@ -29,7 +32,6 @@ export default function ProjetoPage() {
   const createProject = trpc.projects.create.useMutation({
     onSuccess: function () {
       reset()
-      alert('Projeto criado com sucesso!')
     },
     onError: function (error) {
       alert(`Erro ao criar projeto: ${error.message}`)
@@ -130,30 +132,9 @@ export default function ProjetoPage() {
 
       <div className="h-px w-full bg-zinc-900" />
 
-      <ul className="space-y-4">
-        <li className="group space-y-3 border border-zinc-900 p-5 transition-colors hover:border-zinc-700">
-          <div className="flex items-start justify-between">
-            <span className="font-mono text-xs text-zinc-500">PRJ-001</span>
-            <span className="text-xs text-zinc-700">
-              {new Date().toLocaleDateString('pt-BR')}
-            </span>
-          </div>
-          <p className="text-base text-zinc-300 transition-colors group-hover:text-white">
-            Exemplo de projeto
-          </p>
-          <div className="flex items-center justify-between border-t border-zinc-900 pt-2">
-            <div className="flex items-center gap-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-black">
-                C
-              </div>
-              <span className="text-sm text-zinc-600">Cliente Exemplo</span>
-            </div>
-            <span className="font-mono text-xs text-zinc-500">
-              Categoria: Financiamento
-            </span>
-          </div>
-        </li>
-      </ul>
+      <ClientOnly>
+        <ProjectList />
+      </ClientOnly>
     </div>
   )
 }

@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - 54321:5432
+      - "54321:5432"
     tmpfs:
       - /var/lib/postgresql/data
       - /tmp
@@ -22,11 +22,14 @@ services:
     image: electricsql/electric:latest
     environment:
       DATABASE_URL: postgresql://postgres:password@postgres-eosfin:5432/eosfin?sslmode=disable
-      ELECTRIC_INSECURE: true
+      ELECTRIC_WRITE_TO_PG_MODE: direct_writes
+      ELECTRIC_INSECURE: "true"
+      AUTH_MODE: insecure
     ports:
-      - "3002:3000"
+      - "3010:3000"
     depends_on:
       - postgres-eosfin
+    restart: unless-stopped
 
   # Postgres BR (eosloan)
   postgres-eosloan:
@@ -36,7 +39,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - 54322:5432
+      - "54322:5432"
     tmpfs:
       - /var/lib/postgresql/data
       - /tmp
@@ -51,8 +54,11 @@ services:
     image: electricsql/electric:latest
     environment:
       DATABASE_URL: postgresql://postgres:password@postgres-eosloan:5432/eosloan?sslmode=disable
-      ELECTRIC_INSECURE: true
+      ELECTRIC_WRITE_TO_PG_MODE: direct_writes
+      ELECTRIC_INSECURE: "true"
+      AUTH_MODE: insecure
     ports:
-      - "3003:3000"
+      - "3011:3000"
     depends_on:
       - postgres-eosloan
+    restart: unless-stopped

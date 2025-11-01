@@ -1,5 +1,5 @@
-import { router } from './trpc'
 import { projectsRouter } from './routers/projects'
+import { router } from './trpc'
 
 export const appRouter = router({
   projects: projectsRouter,

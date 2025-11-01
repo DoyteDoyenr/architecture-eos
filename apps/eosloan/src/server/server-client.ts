@@ -22,7 +22,10 @@ async function getServerContext() {
   }
 }
 
-export const serverClient = function (ctx?: { userId?: string; user?: unknown }) {
+export const serverClient = function (ctx?: {
+  userId?: string
+  user?: unknown
+}) {
   return createCaller(ctx || {})
 }
 

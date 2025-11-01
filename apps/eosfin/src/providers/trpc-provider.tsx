@@ -1,9 +1,10 @@
 'use client'
 
-import { trpc } from '@/lib/trpc'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
 import { ReactNode, useState } from 'react'
+
+import { trpc } from '@/lib/trpc'
 
 interface TRPCProviderProps {
   readonly children: ReactNode

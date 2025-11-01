@@ -1,6 +1,7 @@
-import { z } from 'zod'
-import { publicProcedure, router } from '../trpc'
 import { db, schema } from '@repo/database/eosfin'
+import { z } from 'zod'
+
+import { publicProcedure, router } from '../trpc'
 
 export const projectsRouter = router({
   create: publicProcedure
