@@ -1,20 +1,14 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+import { env as envEosfin } from './eosfin'
+import { env as envEosloan } from './eosloan'
 
-export const env = createEnv({
-  server: {
-    PORT: z.coerce.number().default(3333),
-    DATABASE_URL: z.string().url(),
-    JWT_SECRET: z.string(),
-  },
-  client: {},
-  // shared: {
-  //   NEXT_PUBLIC_API_URL: z.string().url(),
-  // },
-  runtimeEnv: {
-    PORT: process.env.SERVER_PORT,
-    DATABASE_URL: process.env.DATABASE_URL,
-    JWT_SECRET: process.env.JWT_SECRET,
-  },
-  emptyStringAsUndefined: true,
-});
+function getEnv() {
+  const appName = process.env.NEXT_PUBLIC_APP_NAME
+
+  if (appName === 'eosloan') {
+    return envEosloan
+  }
+
+  return envEosfin
+}
+
+export const env = getEnv()

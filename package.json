@@ -15,8 +15,8 @@
     "generate": "turbo run generate"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
-    "turbo": "^2.5.4",
+    "prettier": "^3.6.2",
+    "turbo": "^2.6.0",
     "typescript": "5.8.2"
   },
   "packageManager": "pnpm@9.0.0",

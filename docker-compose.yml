@@ -1,0 +1,58 @@
+services:
+  # Postgres US (eosfin)
+  postgres-eosfin:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: eosfin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 54321:5432
+    tmpfs:
+      - /var/lib/postgresql/data
+      - /tmp
+    command:
+      - -c
+      - listen_addresses=*
+      - -c
+      - wal_level=logical
+
+  # Electric US (eosfin)
+  electric-eosfin:
+    image: electricsql/electric:latest
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres-eosfin:5432/eosfin?sslmode=disable
+      ELECTRIC_INSECURE: true
+    ports:
+      - "3002:3000"
+    depends_on:
+      - postgres-eosfin
+
+  # Postgres BR (eosloan)
+  postgres-eosloan:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: eosloan
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 54322:5432
+    tmpfs:
+      - /var/lib/postgresql/data
+      - /tmp
+    command:
+      - -c
+      - listen_addresses=*
+      - -c
+      - wal_level=logical
+
+  # Electric BR (eosloan)
+  electric-eosloan:
+    image: electricsql/electric:latest
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres-eosloan:5432/eosloan?sslmode=disable
+      ELECTRIC_INSECURE: true
+    ports:
+      - "3003:3000"
+    depends_on:
+      - postgres-eosloan
