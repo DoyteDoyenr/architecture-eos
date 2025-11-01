@@ -4,15 +4,18 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:eosfin": "pnpm --filter @repo/eosfin dev",
+    "dev:eosloan": "pnpm --filter @repo/eosloan dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "db:migrate:deploy": "turbo run db:migrate:deploy",
-    "db:migrate:dev": "turbo run db:migrate:dev",
-    "db:push": "turbo run db:push",
-    "db:seed": "turbo run db:seed",
-    "db:studio": "turbo run studio",
-    "generate": "turbo run generate"
+    "env:setup": "ln -sf ../../.env.eosfin apps/eosfin/.env && ln -sf ../../.env.eosloan apps/eosloan/.env && ln -sf ../../.env.eosfin packages/database/.env.eosfin && ln -sf ../../.env.eosloan packages/database/.env.eosloan && echo '✅ Symlinks criados com sucesso!'",
+    "db:generate:eosfin": "pnpm --filter @repo/database db:generate:eosfin",
+    "db:generate:eosloan": "pnpm --filter @repo/database db:generate:eosloan",
+    "db:push:eosfin": "pnpm --filter @repo/database db:push:eosfin",
+    "db:push:eosloan": "pnpm --filter @repo/database db:push:eosloan",
+    "db:migrate:eosfin": "pnpm --filter @repo/database db:migrate:eosfin",
+    "db:migrate:eosloan": "pnpm --filter @repo/database db:migrate:eosloan"
   },
   "devDependencies": {
     "prettier": "^3.6.2",

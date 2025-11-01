@@ -1,0 +1,138 @@
+'use client'
+
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { trpc } from '@/lib/trpc'
+
+const createProjectSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().min(1, 'Description is required'),
+  clientName: z.string().min(1, 'Client name is required'),
+  value: z.string().min(1, 'Value is required'),
+})
+
+type CreateProjectForm = z.infer<typeof createProjectSchema>
+
+export default function ProjectPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CreateProjectForm>({
+    resolver: zodResolver(createProjectSchema),
+  })
+
+  const createProject = trpc.projects.create.useMutation({
+    onSuccess: function () {
+      reset()
+      alert('Project created successfully!')
+    },
+    onError: function (error) {
+      alert(`Error creating project: ${error.message}`)
+    },
+  })
+
+  function onSubmit(data: CreateProjectForm) {
+    createProject.mutate({
+      ...data,
+      value: parseFloat(data.value),
+    })
+  }
+
+  return (
+    <div className="mx-auto max-w-4xl space-y-8 p-8">
+      <header className="space-y-1">
+        <h1 className="text-2xl font-bold text-white">Projects</h1>
+        <p className="text-sm text-zinc-600">Manage your loan projects</p>
+      </header>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-end gap-3"
+      >
+        <div className="w-full space-y-1">
+          <textarea
+            {...register('description')}
+            placeholder="Describe the project..."
+            className="w-full resize-y border border-zinc-900 bg-black p-4 text-sm text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-white"
+            rows={3}
+          />
+          {errors.description && (
+            <p className="text-xs text-red-500">{errors.description.message}</p>
+          )}
+        </div>
+
+        <div className="grid w-full grid-cols-2 gap-3">
+          <div className="space-y-1">
+            <input
+              {...register('clientName')}
+              type="text"
+              placeholder="Client name"
+              className="w-full border border-zinc-900 bg-black p-4 text-sm text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-white"
+            />
+            {errors.clientName && (
+              <p className="text-xs text-red-500">
+                {errors.clientName.message}
+              </p>
+            )}
+          </div>
+          <div className="space-y-1">
+            <input
+              {...register('value')}
+              type="text"
+              placeholder="Amount ($)"
+              className="w-full border border-zinc-900 bg-black p-4 text-sm text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-white"
+            />
+            {errors.value && (
+              <p className="text-xs text-red-500">{errors.value.message}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="w-full space-y-1">
+          <input
+            {...register('title')}
+            type="text"
+            placeholder="Project title"
+            className="w-full border border-zinc-900 bg-black p-4 text-sm text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-white"
+          />
+          {errors.title && (
+            <p className="text-xs text-red-500">{errors.title.message}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          disabled={createProject.isPending}
+          className="h-9 cursor-pointer bg-white px-5 text-sm font-medium text-black transition-colors hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {createProject.isPending ? 'Creating...' : 'Create project'}
+        </button>
+      </form>
+
+      <div className="h-px w-full bg-zinc-900" />
+
+      <ul className="space-y-4">
+        <li className="group space-y-3 border border-zinc-900 p-5 transition-colors hover:border-zinc-700">
+          <div className="flex items-start justify-between">
+            <span className="font-mono text-xs text-zinc-500">PRJ-001</span>
+            <span className="text-xs text-zinc-700">
+              {new Date().toLocaleDateString('en-US')}
+            </span>
+          </div>
+          <p className="text-base text-zinc-300 transition-colors group-hover:text-white">
+            Sample loan project
+          </p>
+          <div className="flex items-center gap-2 border-t border-zinc-900 pt-2">
+            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-black">
+              C
+            </div>
+            <span className="text-sm text-zinc-600">Sample Client</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  )
+}

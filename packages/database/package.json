@@ -7,19 +7,17 @@
     "./eosloan": "./src/eosloan/client.ts"
   },
   "scripts": {
-    "db:generate:eosfin": "drizzle-kit generate --config=drizzle.config.eosfin.ts",
-    "db:migrate:eosfin": "drizzle-kit migrate --config=drizzle.config.eosfin.ts",
-    "db:push:eosfin": "drizzle-kit push --config=drizzle.config.eosfin.ts",
-    "db:studio:eosfin": "drizzle-kit studio --config=drizzle.config.eosfin.ts",
-    "db:generate:eosloan": "drizzle-kit generate --config=drizzle.config.eosloan.ts",
-    "db:migrate:eosloan": "drizzle-kit migrate --config=drizzle.config.eosloan.ts",
-    "db:push:eosloan": "drizzle-kit push --config=drizzle.config.eosloan.ts",
-    "db:studio:eosloan": "drizzle-kit studio --config=drizzle.config.eosloan.ts",
+    "db:generate:eosfin": "dotenv -e .env.eosfin -- drizzle-kit generate --config=drizzle.config.eosfin.ts",
+    "db:migrate:eosfin": "dotenv -e .env.eosfin -- drizzle-kit migrate --config=drizzle.config.eosfin.ts",
+    "db:push:eosfin": "dotenv -e .env.eosfin -- drizzle-kit push --config=drizzle.config.eosfin.ts",
+    "db:generate:eosloan": "dotenv -e .env.eosloan -- drizzle-kit generate --config=drizzle.config.eosloan.ts",
+    "db:migrate:eosloan": "dotenv -e .env.eosloan -- drizzle-kit migrate --config=drizzle.config.eosloan.ts",
+    "db:push:eosloan": "dotenv -e .env.eosloan -- drizzle-kit push --config=drizzle.config.eosloan.ts",
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
     "@repo/environment": "workspace:*",
-    "drizzle-orm": "^0.36.4",
+    "drizzle-orm": "^0.44.7",
     "postgres": "^3.4.5"
   },
   "devDependencies": {
@@ -28,7 +26,8 @@
     "@repo/prettier": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "@types/node": "^20",
-    "drizzle-kit": "^0.30.1",
+    "dotenv-cli": "^11.0.0",
+    "drizzle-kit": "^0.31.6",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },

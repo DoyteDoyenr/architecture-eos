@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1761984418133,
+      "tag": "0000_noisy_venom",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761986478493,
+      "tag": "0001_long_hitman",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761986736126,
+      "tag": "0002_natural_mother_askani",
+      "breakpoints": true
+    }
+  ]
+}
