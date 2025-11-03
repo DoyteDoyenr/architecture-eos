@@ -31,13 +31,19 @@ pnpm env:setup
 docker-compose up -d
 ```
 
-5. Execute as migrações do banco de dados:
+5. Gere as migrações do banco de dados:
 ```bash
-pnpm db:push:eosfin
-pnpm db:push:eosloan
+pnpm db:generate:eosfin
+pnpm db:generate:eosloan
 ```
 
-6. Inicie o servidor de desenvolvimento:
+6. Execute as migrações no banco de dados:
+```bash
+pnpm db:migrate:eosfin
+pnpm db:migrate:eosloan
+```
+
+7. Inicie o servidor de desenvolvimento:
 ```bash
 pnpm dev
 ```
