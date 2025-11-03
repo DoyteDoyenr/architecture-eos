@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate-turbo-repo",
+  "name": "architecture-eos",
   "private": true,
   "scripts": {
     "build": "turbo run build",
